@@ -6,27 +6,50 @@
 //
 
 import Foundation
-
-let portraitMode: String = "portrait"
-let landscapeMode: String = "landscape"
+import UIKit
 
 @objc(OrientationManager)
 class OrientationManager: NSObject {
   
+  private let portraitMode: String = "portrait"
+  private let landscapeMode: String = "landscape"
+  
+  private let errorMessage: String = "Unable to get device orientation"
+  
   @objc
-  func getOrientation() -> String {
-    let device = UIDevice.currentDevice()
-    if device.generatesDeviceOrientationNotifications {
-      device.beginGeneratingDeviceOrientationNotifications()
-      
-      if device.orientation.isLandscape {
-        return landscapeMode
-      }
-      
-      return portraitMode
-    } else {
-      return portraitMode
-    }
+  static func requiresMainQueueSetup() -> Bool {
+    return true
+  }
+
+  override init() {
+    UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+    
+    super.init()
   }
   
+  @objc
+  func getOrientation(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) -> Void {
+    let device = UIDevice.current
+    
+    if device.isGeneratingDeviceOrientationNotifications == false {
+      return reject(errorMessage, errorMessage, nil)
+    }
+    
+    if device.orientation.isLandscape {
+      return resolve(landscapeMode)
+    }
+    
+    return resolve(portraitMode)
+  }
+  
+  @objc
+  func getOrientationSynchronously() -> String {
+    let device = UIDevice.current
+    
+    if device.orientation.isLandscape {
+      return landscapeMode
+    }
+    
+    return portraitMode
+  }
 }

@@ -9,8 +9,13 @@
 
 @interface RCT_EXTERN_MODULE(OrientationManager, NSObject)
 
-RCT_EXTERN_METHOD(getOrientation)
+RCT_EXTERN_METHOD(getOrientation: (RCTPromiseResolveBlock)resolve rejecter: (RCTPromiseRejectBlock)reject)
 
-//RCT_EXTERN__BLOCKING_SYNCHRONOUS_METHOD(getOrientationSynchronously)
+RCT_EXTERN__BLOCKING_SYNCHRONOUS_METHOD(getOrientationSynchronously)
+
+- (dispatch_queue_t)methodQueue
+{
+  return dispatch_get_main_queue();
+}
 
 @end
