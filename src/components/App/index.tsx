@@ -5,8 +5,8 @@ import { OrientationManager } from '@/modules/Orientation';
 
 const App = () => {
   useEffect(() => {
-    // console.log(OrientationManager.getOrientation().then(console.log));
-    console.log(OrientationManager.getOrientationSynchronously());
+    OrientationManager.getOrientation().then(console.log).catch();
+    // console.log(OrientationManager.getOrientationSynchronously());
   }, []);
   return <View />;
 };

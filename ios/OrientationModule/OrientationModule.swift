@@ -11,6 +11,8 @@ import UIKit
 @objc(OrientationManager)
 class OrientationManager: NSObject {
   
+  private let device: UIDevice = UIDevice.current
+  
   private let portraitMode: String = "portrait"
   private let landscapeMode: String = "landscape"
   
@@ -29,22 +31,16 @@ class OrientationManager: NSObject {
   
   @objc
   func getOrientation(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) -> Void {
-    let device = UIDevice.current
     
     if device.isGeneratingDeviceOrientationNotifications == false {
       return reject(errorMessage, errorMessage, nil)
     }
     
-    if device.orientation.isLandscape {
-      return resolve(landscapeMode)
-    }
-    
-    return resolve(portraitMode)
+    return resolve(getOrientationSynchronously())
   }
   
   @objc
   func getOrientationSynchronously() -> String {
-    let device = UIDevice.current
     
     if device.orientation.isLandscape {
       return landscapeMode
