@@ -1,14 +1,27 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, FC } from 'react';
 import { View } from 'react-native';
 
-import { OrientationManager } from '@/modules/Orientation';
+// import { OrientationManager } from '@/modules/Orientation';
+// import { useOrientation } from '@/modules/Orientation';
+import { Orientation } from '@/modules/Orientation/types';
+import { withOrientation } from '@/modules/Orientation/api/hocs';
 
-const App = () => {
-  useEffect(() => {
-    OrientationManager.getOrientation().then(console.log).catch();
-    // console.log(OrientationManager.getOrientationSynchronously());
-  }, []);
+// const App = () => {
+//   const orientation = useOrientation();
+
+//   console.log(orientation);
+
+//   return <View />;
+// };
+
+type Props = {
+  orientation: Orientation;
+};
+
+const App: FC<Props> = ({ orientation }) => {
+  console.log(orientation);
+
   return <View />;
 };
 
-export default memo(App);
+export default memo(withOrientation(App));

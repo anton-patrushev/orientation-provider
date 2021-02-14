@@ -1,1 +1,2 @@
-export { default as OrientationManager } from './module';
+export { OrientationManager } from './core';
+export * from './api';
