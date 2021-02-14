@@ -22,6 +22,7 @@ public class OrientationPackage implements ReactPackage {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new OrientationModule(reactContext));
+        modules.add(new OrientationEventEmitter(reactContext));
 
         return modules;
     }

@@ -1,11 +1,22 @@
 import { OrientationEvents } from '../core/events';
-import { Orientation, OrientationEvent } from '../types';
+import {
+  OnOrientationChangedEvent,
+  Orientation,
+  OrientationEvent,
+} from '../types';
 
 function subscribeToOrientationEvent(
   eventName: OrientationEvent,
   listener: (value: Orientation) => void,
 ) {
-  const { remove } = OrientationEvents.addListener(eventName, listener);
+  const handleOrientationEvent = (event: OnOrientationChangedEvent) => {
+    listener(event.orientation);
+  };
+
+  const { remove } = OrientationEvents.addListener(
+    eventName,
+    handleOrientationEvent,
+  );
 
   return remove;
 }

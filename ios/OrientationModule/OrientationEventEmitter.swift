@@ -36,7 +36,7 @@ class OrientationEventEmitter: RCTEventEmitter {
   func orientationChangeHandler(notificatiton: Notification) -> Void {
     let orientation: Orientation = OrientationManager.getOrientationSynchronouslyHelper()
     
-    sendEvent(withName: orientationChangedEventName, body: orientation.rawValue)
+    sendEvent(withName: orientationChangedEventName, body: ["orientation": orientation.rawValue])
   }
   
   override func supportedEvents() -> [String] {
